@@ -4,7 +4,7 @@ pipeline {
     registry = "$REGISTRY"
     registryCredential = "$REGISTRY_CREDENTIALS"
     kubeConfig = "$KUBECONFIG"
-    image = "python-fastapi-hello"
+    image = "$IMAGE"
   }
 
   agent any
