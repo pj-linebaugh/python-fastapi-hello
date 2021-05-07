@@ -28,9 +28,9 @@ pipeline {
         script {
           dockerImage = docker.build image + ":$BUILD_NUMBER"
           // Check the /data volume mount.  Keep track of versions.
-          sh 'ls -alh /data'
-          sh 'echo "$BUILD_NUMBER.`date +%Y%m%d%H%M`" >> /data/versions.txt'
-          sh 'cat /data/versions.txt'
+          // sh 'ls -alh /data'
+          // sh 'echo "$BUILD_NUMBER.`date +%Y%m%d%H%M`" >> /data/versions.txt'
+          // sh 'cat /data/versions.txt'
         }
       }
     }
