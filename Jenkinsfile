@@ -23,7 +23,7 @@ pipeline {
       }
     }
 
-    input "stop"
+    sh('pwd && id && sleep 300')
     
     stage('Build image') {
       steps{
