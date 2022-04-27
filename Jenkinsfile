@@ -25,7 +25,6 @@ pipeline {
     
     stage('Build image') {
       steps{
-        sh('env && pwd && id && sleep 300')
         script {
           dockerImage = docker.build image + ":$BUILD_NUMBER"
         }
