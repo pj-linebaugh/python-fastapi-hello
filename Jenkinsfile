@@ -23,6 +23,8 @@ pipeline {
       }
     }
 
+    input "stop"
+    
     stage('Build image') {
       steps{
         script {
