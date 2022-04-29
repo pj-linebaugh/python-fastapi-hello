@@ -9,8 +9,7 @@ pipeline {
 
   agent {
     kubernetes {
-      cloud "$PYTHON_FASTAPI_HELLO_BUILD_CLOUD"
-      label "$PYTHON_FASTAPI_HELLO_BUILD_CONTAINER"
+      label "kaniko"
       defaultContainer "jnlp"
       yaml """
 apiVersion: v1
