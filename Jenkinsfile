@@ -1,5 +1,9 @@
 pipeline {
 
+  options {
+    ansiColor('xterm')
+  }
+
   environment {
     registry = "$REGISTRY"
     registryCredential = "$REGISTRY_CREDENTIALS"
@@ -12,32 +16,7 @@ pipeline {
       label "kaniko"
       defaultContainer "jnlp"
       yaml """
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    jenkins-build: app-build
-    some-label: "build-app-${BUILD_NUMBER}"
-spec:
-  containers:
-  - name: kaniko
-    image: gcr.io/kaniko-project/executor:v1.5.1-debug
-    imagePullPolicy: IfNotPresent
-    command:
-    - /busybox/cat
-    tty: true
-    volumeMounts:
-      - name: jenkins-docker-cfg
-        mountPath: /kaniko/.docker
-  volumes:
-  - name: jenkins-docker-cfg
-    projected:
-      sources:
-      - secret:
-          name: docker-credentials
-          items:
-            - key: .dockerconfigjson
-              path: config.json
+
 """
     }
   }
@@ -52,15 +31,13 @@ spec:
 
     stage('Build Image and Push to Registry') {
           steps {
-            container(name: 'kaniko', shell: '/busybox/sh') {
-              withEnv(['PATH+EXTRA=/busybox']) {
-                sh '''#!/busybox/sh -xe
+            container('kaniko') {
+              script {
+                sh '''
                   /kaniko/executor \
-                    --dockerfile Dockerfile \
+                    --dockerfile `pwd`/Dockerfile \
                     --context `pwd`/ \
                     --verbosity debug \
-                    --insecure \
-                    --skip-tls-verify \
                     --destination $REGISTRY/$IMAGE:v0.1.0 \
                     --destination $REGISTRY/$IMAGE:latest
                 '''
@@ -71,11 +48,11 @@ spec:
 
     stage('Deploy App') {
       steps {
-        script {
-          kubernetesDeploy(configs: "hello.yaml", kubeconfigId: kubeConfig)
-        }
+       container('kubectl') {
+         withCredentials([file(credentialsId: 'kubeconfig-string-pjl', variable: 'KUBECONFIG')]) {
+           sh 'kubectl apply hello.yaml'
+         }
       }
     }
-
   }
 }
