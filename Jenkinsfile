@@ -44,11 +44,13 @@ pipeline {
 
     stage('Deploy App') {
       steps {
-       container('kubectl') {
-         withCredentials([file(credentialsId: 'kubeconfig-string-pjl', variable: 'KUBECONFIG')]) {
+        container('kubectl') {
+          withCredentials([file(credentialsId: 'kubeconfig-string-pjl', variable: 'KUBECONFIG')]) {
            sh 'kubectl apply hello.yaml'
-         }
+          }
+        }
       }
     }
+
   }
 }
