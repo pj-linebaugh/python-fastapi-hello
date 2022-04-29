@@ -13,11 +13,7 @@ pipeline {
 
   agent {
     kubernetes {
-      label "kaniko"
-      defaultContainer "jnlp"
-      yaml """
-
-"""
+      yamlFile 'builder.yaml'
     }
   }
 
