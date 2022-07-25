@@ -27,9 +27,8 @@ pipeline {
 
     stage('Build Image and Push to Registry') {
           steps {
-            container('kaniko') {
-              script {
-                sh '''
+            container(name: 'kaniko', shell: '/busybox/sh') {
+                sh '''#!/busybox/sh
                   /kaniko/executor \
                     --dockerfile `pwd`/Dockerfile \
                     --context `pwd`/ \
@@ -37,7 +36,6 @@ pipeline {
                     --destination $REGISTRY/$IMAGE:v0.1.0 \
                     --destination $REGISTRY/$IMAGE:latest
                 '''
-              }
             }
           }
         }
