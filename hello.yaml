@@ -20,8 +20,6 @@ spec:
       - image: index.docker.io/pjlrenci/python-fastapi-hello:latest
         imagePullPolicy: Always
         name: hello
-      imagePullSecrets:
-        - name: dockerhub-pjlrenci
 
 ---
 apiVersion: v1
