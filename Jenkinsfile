@@ -27,17 +27,15 @@ pipeline {
 
     stage('Build Image and Push to Registry') {
           steps {
-            container('kaniko') {
-              script {
-                sh '''
+            container(name: 'kaniko', shell: '/busybox/sh') {
+                sh '''#!/busybox/sh
                   /kaniko/executor \
                     --dockerfile `pwd`/Dockerfile \
                     --context `pwd`/ \
                     --verbosity debug \
-                    --destination $REGISTRY/$IMAGE:v0.1.0 \
-                    --destination $REGISTRY/$IMAGE:latest
+                    --destination $REGISTRY$IMAGE:v0.1.0 \
+                    --destination $REGISTRY$IMAGE:latest
                 '''
-              }
             }
           }
         }
@@ -46,7 +44,7 @@ pipeline {
       steps {
         container('kubectl') {
           withCredentials([file(credentialsId: 'kubeconfig-string-pjl', variable: 'KUBECONFIG')]) {
-           sh 'kubectl apply hello.yaml'
+           sh 'kubectl apply -f hello.yaml'
           }
         }
       }
