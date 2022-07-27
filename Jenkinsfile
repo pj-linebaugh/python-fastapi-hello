@@ -44,7 +44,7 @@ pipeline {
       steps {
         container('kubectl') {
           withCredentials([file(credentialsId: 'kubeconfig-string-pjl', variable: 'KUBECONFIG')]) {
-           sh 'kubectl apply hello.yaml'
+           sh 'kubectl apply -f hello.yaml'
           }
         }
       }
