@@ -43,7 +43,7 @@ pipeline {
     stage('Deploy App') {
       steps {
         container('kubectl') {
-          withCredentials([file(credentialsId: '$KUBECONFIG_CREDENTIALS_ID', variable: 'KUBECONFIG')]) {
+          withCredentials([file(credentialsId: $KUBECONFIG_CREDENTIALS_ID, variable: 'KUBECONFIG')]) {
            sh 'kubectl apply -f hello.yaml'
           }
         }
