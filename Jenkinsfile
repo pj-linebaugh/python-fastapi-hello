@@ -43,7 +43,7 @@ pipeline {
     stage('Deploy App') {
       steps {
         container('kubectl') {
-          withCredentials([file(credentialsId: "kubeconfig-python-fastapi-hello", variable: 'KUBECONFIG')]) {
+          withCredentials([file(credentialsId: 'kubeconfig-python-fastapi-hello', variable: 'KUBECONFIG')]) {
            sh 'kubectl apply -f hello.yaml'
           }
         }
