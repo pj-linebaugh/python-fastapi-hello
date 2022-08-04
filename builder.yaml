@@ -10,8 +10,8 @@ spec:
     - /bin/cat
     tty: true
   - name: kaniko
-    # image: gcr.io/kaniko-project/executor:debug
-    image: docker.io/pjlrenci/executor:latest
+    image: gcr.io/kaniko-project/executor:debug
+    # image: docker.io/pjlrenci/executor:latest
     imagePullPolicy: IfNotPresent
     command:
     - /busybox/cat
