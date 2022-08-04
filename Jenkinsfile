@@ -33,6 +33,7 @@ pipeline {
                     --dockerfile `pwd`/Dockerfile \
                     --context `pwd`/ \
                     --verbosity debug \
+                    --kaniko-dir /kaniko \
                     --destination $REGISTRY$IMAGE:v0.1.0 \
                     --destination $REGISTRY$IMAGE:latest
                 '''
