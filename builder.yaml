@@ -31,5 +31,5 @@ spec:
             - key: .dockerconfigjson
               path: config.json
   - name: kaniko
-    persistentVolumeCllaim:
+    persistentVolumeClaim:
       claimName: kaniko-pvc
