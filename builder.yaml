@@ -18,9 +18,9 @@ spec:
     tty: true
     volumeMounts:
       - name: kaniko
-        mountPath: /kaniko-build
+        mountPath: /kaniko/build
       - name: jenkins-docker-cfg
-        mountPath: /kaniko-build/.docker
+        mountPath: /kaniko/build/.docker
   volumes:
   - name: jenkins-docker-cfg
     projected:
